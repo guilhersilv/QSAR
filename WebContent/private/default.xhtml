@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+<link href="../resources/css/estilo.css" rel="stylesheet" type="text/css"></link>
+     <script type="text/javascript">
+function start() {
+    statusDialog.show();
+}
+
+function stop() {
+    statusDialog.hide();
+}
+        </script>  
+       
+</h:head>
+
+<h:body >	
+ <div id="container">
+			 <div id="titulo"><span id="titulo">Construção e Validação de QSAR</span></div>
+	 	
+	 	<div id="logotipo">
+			 			<h:graphicImage value="/resources/imagens/logo.png" alt ="logoQSAR" />
+ 		</div>	<br/>
+ 
+ 			<h:form id="listaTabela">
+ 				<p:growl id="messages" autoUpdate="true"/>
+    			<h:commandLink action="#{UsuarioBean.paginas}"><h:graphicImage value="/resources/imagens/administrativo16.png" alt ="Admin" /></h:commandLink><br/>
+    			
+			</h:form> <br/>
+			
+
+
+    		<h:panelGroup>	
+		<h:form id="up" enctype="multipart/form-data">
+		<div style="float:left"><p:commandButton id="dynaButton" value="Arquivo" type="button" style="width: 106px; height: 32px;"  tabindex="4"/>  
+			<p:menu overlay="true" trigger="dynaButton" my="right top" at="right bottom">  
+        
+        		<p:submenu label="Navegar">  
+           		 	<p:menuitem value="External" url="http://www.iesb.br" icon="ui-icon-home"/>  
+           			<p:menuitem value="Internal" outcome="/private/default" icon="ui-icon-star"/> 
+             		</p:submenu>
+             	<p:submenu label="SAIR">   
+           			<p:menuitem value="sair" outcome="/public/login" icon="ui-icon-close" />
+		        </p:submenu>  
+   			</p:menu>
+   			</div>
+			<p:fileUpload value="#{processingBean.file}" mode="simple" update="growls" showButtons="simple" style="height:32px" id="cta"></p:fileUpload>
+			<h:commandButton value="Submit" style="width:106px; height:32px"  action="#{processingBean.transArquivos()}"></h:commandButton>
+			
+   					 
+		</h:form><h:form> <p:growl id="growls" showDetail="true"/></h:form>
+		</h:panelGroup>
+	
+    	      
+			
+<br/><br/><br/>
+			
+		   <h:form id="listarArquivos">
+		   <p:tabView id="tabView" dynamic="true" cache="true">
+
+        <p:tab id="tba1" title="Arquivos selecionados :">
+            <h:panelGrid columns="2" cellpadding="10">
+                
+                	<h:dataTable value="#{processingBean.listar}" var="p">
+
+						<h:column>
+
+					<h:outputText value="#{p}"/>
+					</h:column>
+
+					<h:column>
+						<h:commandLink action="#{processingBean.remover(p)}" value="remove"></h:commandLink>
+						
+						</h:column>
+			</h:dataTable>	
+			<hr/>
+			<h:commandButton value="Executar Arquivos" style=" height:32px"  action="#{processingBean.paginas()}"/>
+			 
+                  
+            </h:panelGrid>
+        </p:tab>
+
+      
+
+    </p:tabView> 
+		       	 
+				  </h:form> 
+	
+	
+<h:form id="form2">
+    <p:tabView id="tabView" dynamic="true" cache="true">
+
+        <p:tab id="tba1" title="Apresentação">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage id="tab1Img" value="/resources/imagens/logo.png" />
+                <h:outputText
+                    value="sistema Web que permita ao usuário submeter dados a fim de obter uma calibração multivariada,
+                     para auxiliar em suas decisões farmacológicas, com interface amigável, e que atenda de forma simples e eficiente
+                     às necessidades do usuário, tomando como referência osistema já existente para desktop (QSAR Modeling).
+                     O sistema, que segue o modelo de requisições e respostas(cliente-servidor), deverá ser disponibilizado
+                     para usuários cadastrados via Internet" />
+                  
+            </h:panelGrid>
+        </p:tab>
+
+        <p:tab id="tab2" title="Justificativa">
+            <h:panelGrid columns="2" cellpadding="10">
+            
+                <p:graphicImage id="tab2Img" value="/resources/imagens/logo.png" />
+                <h:outputText value="A economia da indústria farmacêutica nos últimos anos tem crescido bastante,
+                 em grande parte devido à produção de novos fármacos. A síntese dos mesmos deve ser antes de tudo
+                  estudada por meio de testes computacionais sobre estes métodos, como o do QSAR. O desenvolvimento
+                   de um sistema Web ubíquo que trabalhasse com os algoritmos necessários e gerasse respostas instantâneas
+                    para os profissionais da área seria de grande ajuda para estes usuários."/>
+            </h:panelGrid>
+        </p:tab>
+
+        <p:tab id="tab3" title="QSAR">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage id="tab3Img" value="/resources/imagens/logo.png" />
+                <h:outputText value="Os métodos de relações quantitativas entre estrutura química e atividade
+                 farmacológica (QSAR) vêm sendo bastante utilizados no planejamento de novos fármacos.
+                 Seu objetivo é encontrar relações quantitativas entre estruturas químicase atividades
+                 de um conjunto de moléculas através de um modelo matemático. Estas relações são eficazes
+                 para explicar o mecanismo de ação de fármacos em níveis moleculares, e para permitir o planejamento
+                 e desenvolvimento de novos compostos que exibam propriedades desejáveis"/>
+            </h:panelGrid>
+        </p:tab>
+
+    </p:tabView>
+</h:form>
+
+          <div id="rodape"><ui:include src="/templates/rodape.xhtml"></ui:include></div>          
+</div>
+
+<h:form id="te"><p:commandButton id="teste" value="Executar" 	actionListener="#{processingBean.paginar}" > 
+				
+					</p:commandButton></h:form>
+
+                  
+                 
+    </h:body>
+
+</html>

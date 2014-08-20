@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+
+<title>Sistema Web para Contrucao e validadacao de Modelos QSAR</title>
+</h:head>
+<h:body>
+<center>
+<h1>Area Administrativa</h1>
+<br/>
+
+<h:form>
+<h:messages/>
+ <!-- Lista de usuarios -->
+
+            <p:panel id="painelConsulta" header="Lista de usuarios cadastrados"
+                     style="text-align:left;width:800px;" >
+
+             
+   <p:dataTable value="#{UsuarioBean.lista}" id="tabela"
+
+                             emptyMessage="Nenhum registro encontrado"
+
+                             rowIndexVar="var"
+
+                             paginator="true"
+
+                             paginatorPosition="bottom"
+
+                             firstPageLinkLabel="Primeira"
+
+                             previousPageLinkLabel="Anterior"
+
+                             nextPageLinkLabel="Proxima"
+
+                             lastPageLinkLabel="ultima"
+
+                             rows="10"
+
+                             var="user"
+
+                             width="600">
+
+  
+
+                              
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Codigo" />
+
+                        </f:facet>
+
+                        <h:outputText value="#{user.codigo}" styleClass="letra1" />   
+
+                    </p:column>
+
+ 				<p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Ativo" />
+
+                        </f:facet>
+
+                        <h:commandLink action="#{UsuarioBean.ativar}" styleClass="letra1" />   
+						<h:graphicImage library="imagens" name="usuario_ativo_#{user.ativo}.png"
+						style="border:0"></h:graphicImage>
+                    </p:column>
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Nome" />
+
+                        </f:facet>
+
+                        <h:outputText value="#{user.nome}" styleClass="letra1" /> 
+
+                     </p:column>
+
+                     
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Email" />
+
+                        </f:facet>
+
+                        <h:outputText value="#{user.email}" styleClass="letra1" />
+
+                    </p:column>
+
+                     <p:column>
+                     	<f:facet name="header">Permissões</f:facet>
+                     	<h:commandLink action="#{UsuarioBean.permitir(user,'ROLE_ADMINISTRADOR')}"
+                     	title="Permissão Administrador">
+                     	<h:graphicImage library="imagens" name="ROLE_ADMINISTRADOR_true.png" style="border:0"></h:graphicImage>
+                     	</h:commandLink>
+                     
+                     	<h:commandLink action="#{UsuarioBean.permitir(user,'ROLE_USUARIO')}"
+                     	title="Permissão Usuario">
+                     	<h:graphicImage library="imagens" name="ROLE_USUARIO_#{useruario.permissao.contains('ROLE_USUARIO')}.png" style="border:0"></h:graphicImage>
+                     	</h:commandLink>
+                     </p:column>
+
+                     <p:column>
+
+                         <h:commandLink action="#{UsuarioBean.editar}" title="Editar usuario">
+						<h:graphicImage library="imagens" name="editar16.png" style="border:0"></h:graphicImage>
+                            <f:setPropertyActionListener target="#{UsuarioBean.user}" value="#{user}" />
+
+                         </h:commandLink>
+
+                    </p:column>
+
+                     
+
+                    <p:column>
+
+                         <h:commandLink action="#{UsuarioBean.excluir}"  title="Excluir usuario"
+                         onclick="if(!confirm('Deseja excluir o usuario #{user.nome}?')) return false;">
+                         <h:graphicImage library="imagens" name="excluir16.png" style="border:0"></h:graphicImage>
+                            <f:setPropertyActionListener target="#{UsuarioBean.user}" value="#{user}" />
+
+                         </h:commandLink>
+
+                    </p:column>
+
+ 
+
+                </p:dataTable>
+
+                             
+
+            </p:panel>
+
+
+</h:form>
+</center>
+</h:body>
+</html>

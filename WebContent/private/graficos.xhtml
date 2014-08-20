@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+<link href="../resources/css/estilo.css" rel="stylesheet" type="text/css"></link>
+     <script type="text/javascript">
+function start() {
+    statusDialog.show();
+}
+
+function stop() {
+    statusDialog.hide();
+}
+function exportChart() {
+    //export image
+    $('#output').empty().append(chart.exportAsImage());
+
+    //show the dialog
+    dlg.show();
+}
+        </script>  
+        
+</h:head>
+
+<h:body >
+
+ <div id="container">
+			 <div id="titulo"><span id="titulo">Construção e Validação de QSAR</span></div>
+	 	
+	 	<div id="logotipo">
+			 			<h:graphicImage value="/resources/imagens/logo.png" alt ="logoQSAR" />
+ 		</div>	<br/><br/><br/>
+ 		
+ 			
+
+ <div id="container">
+ <div id="titulo">
+		
+	</div>
+	 	<div id="logotipo">
+	
+	<h:form id="menus">
+
+
+    	
+       <div style="float: left">
+      
+                 	 <p:commandButton id="dynaButton" value="INICIO" type="button" style="width: 106px; height: 32px;"  tabindex="4"/>  
+   					 <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">  
+        
+        				<p:submenu label="Processamento">  
+           				 	<p:menuitem value="processamento" icon="ui-icon-star" outcome="/private/qsar"/>  
+           				 	<p:menuitem value="Internal" outcome="/private/default" icon="ui-icon-star"/> 
+             	 		</p:submenu>
+             			<p:submenu label="SAIR">   
+           		 			<p:menuitem value="sair" outcome="/public/login" icon="ui-icon-close" />
+		        		</p:submenu>  
+   			 		</p:menu>
+   		
+	</div>
+	</h:form>
+	
+
+
+		</div>
+		
+		
+		<br/><br/>
+		<div id="upload">
+
+   
+<h:form>
+ 	
+                <br/><br/>
+         
+         <p:lineChart value="#{processingBean.linearModel}" legendPosition="e" zoom="true" minX="0" maxX="0.4000000000000000"
+                         title="Linear Chart" minY="0" maxY="10" style="width:500px;height:300px" widgetVar="chart"/>
+            
+<p:commandButton type="button" value="Export" icon="ui-icon-extlink" onclick="exportChart()"/>
+
+<p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="Chart as an Image">
+    <p:outputPanel id="output" layout="block" style="width:500px;height:300px"/>
+</p:dialog>
+
+
+         
+      </h:form>
+    <h:messages/>  
+          
+           
+
+
+</div>
+     </div>             
+      </div>           
+    </h:body>
+
+</html>
+

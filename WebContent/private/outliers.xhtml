@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+<link href="../resources/css/estilo.css" rel="stylesheet" type="text/css"></link>
+     <script type="text/javascript">
+function start() {
+    statusDialog.show();
+}
+
+function stop() {
+    statusDialog.hide();
+}
+        </script>  
+        
+</h:head>
+
+<h:body >
+
+ <div id="container">
+			 <div id="titulo"><span id="titulo">Construção e Validação de QSAR</span></div>
+	 	
+	 	<div id="logotipo">
+			 			<h:graphicImage value="/resources/imagens/logo.png" alt ="logoQSAR" />
+ 		</div>	<br/><br/><br/>
+ 		
+ 			
+
+ <div id="container">
+ <div id="titulo">
+		
+	</div>
+	 	<div id="logotipo">
+	
+	<h:form id="menus">
+
+
+    	
+       <div style="float: left">
+      
+                 	 <p:commandButton id="dynaButton" value="INICIO" type="button" style="width: 106px; height: 32px;"  tabindex="4"/>  
+   					 <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">  
+        
+        				<p:submenu label="Processamento">  
+           				 	<p:menuitem value="processamento" icon="ui-icon-star" outcome="/private/qsar"/>  
+           				 	<p:menuitem value="Internal" outcome="/private/default" icon="ui-icon-star"/> 
+             	 		</p:submenu>
+             			<p:submenu label="SAIR">   
+           		 			<p:menuitem value="sair" outcome="/public/login" icon="ui-icon-close" />
+		        		</p:submenu>  
+   			 		</p:menu>
+   		
+	</div>
+	</h:form>
+	
+
+   
+
+
+
+ 	<h:form id="listarArquivos">
+   
+      <p:panel header="detecçaõ outliers">
+         <h:panelGrid columns="2" >
+         		
+  		<p:growl id="messages" showDetail="true"/> 
+ <p:panel id="painelConsulta" 
+                     style="text-align:left;width:300px;" >
+
+             
+   <p:dataTable value="#{processingBean.detecOutliers()}" id="tabela" rendered="#{!empty processingBean.detecOutliers()}"
+
+                             emptyMessage="Nenhum registro encontrado"
+
+                             rowIndexVar="true"
+
+                             paginator="true"
+
+                             paginatorPosition="bottom"
+
+                             firstPageLinkLabel="Primeira"
+
+                             previousPageLinkLabel="Anterior"
+
+                             nextPageLinkLabel="Proxima"
+
+                             lastPageLinkLabel="ultima"
+
+                             rows="50"
+
+                             var="user"
+
+                             width="300"  iveResize="true" draggableColumns="true" editable="true" editMode="cell" >
+                           
+
+                      <p:ajax event="cellEdit" listener="#{processingBean.detecOutliers()}" update=":listarArquivos:messages" /> 
+				<p:column style="max-width: 60px; min-width: 60px; overflow: hidden">
+                        <f:facet name="header">
+
+                            <h:outputText  value="Amostra" />
+
+                        </f:facet>
+                        <h:outputText value="#{user}" styleClass="letra1"/>
+                        </p:column>
+                        <p:column style="max-width: 180px; min-width: 180px; overflow: hidden">
+                        
+                        <f:facet name="header">
+
+                            <h:outputText  value="#{processingBean.rotuloTitulos}" />
+					 
+                        </f:facet>
+						        <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{user}"></h:outputText> </f:facet>
+                <f:facet name="input"><p:inputText value="#{user}" style="width:96%" /></f:facet>
+            </p:cellEditor>  
+                     
+			
+                    </p:column>
+                    
+     
+                    
+
+                </p:dataTable>
+
+   
+	</p:panel>
+</h:panelGrid>
+      
+         		 
+         		
+  
+         	
+    
+       
+		
+		</p:panel>  
+		  
+    </h:form> 
+    
+
+
+
+		</div>
+		
+		
+		<br/><br/>
+		<div id="upload">
+
+   
+
+
+ 	<br/> 	<br/> 	<br/>
+ 	
+         
+      
+    <h:messages/>  
+          
+           
+
+
+</div>
+     </div>             
+      </div>           
+    </h:body>
+
+</html>
+

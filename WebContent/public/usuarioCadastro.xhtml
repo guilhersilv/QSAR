@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"><!-- (1) -->
+<h:head>
+<link href="../resources/css/estilo.css" rel="stylesheet" type="text/css"></link>
+</h:head>
+
+<h:body >
+
+	 
+ <div id="container">
+
+  <div id="titulo">
+			<span id="titulo">Construção e Validação de QSAR</span>
+	</div>
+		<div id="logotipo">
+		<h:graphicImage value="/resources/imagens/logo.png" alt ="logoQSAR" />
+ 		 
+		
+		</div>
+	<br /><br />
+		
+	<h:form id="cadastro_user">
+	
+		<h:inputHidden value="#{UsuarioBean.user.codigo}"/>
+		<h:inputHidden value="#{UsuarioBean.user.ativo}"/>
+		
+		
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Nome:" for="nome"/>
+			<h:inputText id="nome" label="Nome" value="#{UsuarioBean.user.nome}" size="30"
+			maxlength="40" required="true" requiredMessage="Nome por favor!"><h:message for="nome"></h:message>
+			<f:validateLength minimum = "10" maximum="40"></f:validateLength>
+			
+			
+			</h:inputText>
+			
+			<h:outputLabel value="E-Mail" for="email"/>
+			<h:panelGroup>
+			 
+				<h:inputText id="email" label ="e-Mail" value="#{UsuarioBean.user.email}" size="50"
+				maxlength="50" required="true" validatorMessage="e-mail inválido"><h:messages />
+				<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
+				</h:inputText>
+				<h:message for="email"></h:message>
+				
+			</h:panelGroup>
+			
+			<h:outputLabel value="Login: " for="login"></h:outputLabel>
+			<h:inputText id="login" label="Login" value="#{UsuarioBean.user.login}"
+			size="15" maxlength="15" required="true">
+			
+			</h:inputText>
+			
+			<h:outputLabel value="Senha:" for="senha"/>
+			<h:inputSecret id="senha" label="Senha" value="#{UsuarioBean.user.senha}" size="10"
+			maxlength="10" required="true" redisplay="true"/>
+			
+			<h:outputLabel value="Confirmar Senha:" for="confirmarsenha"/>
+			<h:inputSecret id="confirmarsenha" label="Confirmar Senha" value="#{UsuarioBean.confirmarSenha}"
+			size="10" maxlength="10" required="true" redisplay="true"/>
+			
+			
+			
+			<h:outputLabel value="Telefone: " for="telefone"></h:outputLabel>
+			<h:inputText id="telefone" label="Telefone" value="#{UsuarioBean.user.telefone}"></h:inputText>
+			
+			<h:outputLabel value="Data do Cadastro: " for="DataCadastro"></h:outputLabel>
+			<h:inputText id="DataCadastro" label="Data do Cadastro" value="#{UsuarioBean.user.dataCadastro}"
+			size="10" maxlength="10" required="true">
+			<f:convertDateTime dateStyle="medium"></f:convertDateTime>
+			</h:inputText>
+			<h:commandButton action="#{UsuarioBean.salvar}" value="Salvar"/>
+					
+			</h:panelGrid>
+	</h:form>
+	
+	</div>
+</h:body>
+
+</html>

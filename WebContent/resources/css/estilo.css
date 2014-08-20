@@ -1,0 +1,78 @@
+body, td, th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+th {
+	background: url(#{resource['imagens:fundo_claro.png']}); 
+	min-height: 25px;
+	padding: 3px;
+}
+
+img {
+	border:0px;
+}
+
+#texArea{
+	background-image: url(#{resource['imagens:folha.jpg']}) !important;  /* uso do !important */  
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+
+}
+#container {
+	width: 770px;
+	height: 100%;
+	margin: 0 auto
+}
+#upload {
+	width: 670px;
+	height: 100%;
+	margin: 1px;
+}
+#titulo {
+	float: left;
+	font-size: 25pt;
+	font-variant: small-caps;
+	font-weight: bold;
+}
+
+#barra_menu {
+	background: url(#{resource['imagens:fundo_barra_menu.png']}) repeat-x; 
+	min-height: 25px;
+	padding: 3px;
+	clear:both;
+}
+
+#corpo {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	min-height: 300px;
+}
+
+#rodape {
+	background: url(#{resource['imagens:fundo_barra_rodape.png']}) repeat-x;
+	height: 100px;
+	margin-top: 5px;
+	padding: 10px;
+	text-align: center;
+}
+
+.info {
+	font-weight: bold;
+	color: green;
+}
+
+.warn {
+	font-weight: bold;
+	color: #FFCC00;
+}
+
+.fatal, .error {
+	font-weight: bold;
+	color: red;
+}
+  <style type="text/css">
+        .ui-widget {
+            font-size: 12px !important;
+        }
+    </style>

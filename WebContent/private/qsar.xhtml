@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+<link href="../resources/css/estilo.css" rel="stylesheet" type="text/css"></link>
+     <script type="text/javascript">
+function start() {
+    statusDialog.show();
+}
+
+function stop() {
+    statusDialog.hide();
+}
+        </script>  
+        
+</h:head>
+
+<h:body >
+
+ <div id="container">
+			 <div id="titulo"><span id="titulo">Construção e Validação de QSAR</span></div>
+	 	
+	 	<div id="logotipo">
+			 			<h:graphicImage value="/resources/imagens/logo.png" alt ="logoQSAR" />
+ 		</div>	<br/><br/><br/>
+ 		
+ 			
+
+ <div id="container">
+ <div id="titulo">
+		
+	</div>
+	 	<div id="logotipo">
+	
+	<h:form id="menus">
+
+
+    	
+       <div style="float: left">
+      
+                 	 <p:commandButton id="dynaButton" value="INICIO" type="button" style="width: 106px; height: 32px;"  tabindex="4"/>  
+   					 <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">  
+        
+        				<p:submenu label="Paginas">  
+           				 	<p:menuitem value="processamento" icon="ui-icon-star" outcome="/private/qsar"/>  
+           				 	<p:menuitem value="Internal" outcome="/private/default" icon="ui-icon-star"/> 
+             	 		</p:submenu>
+             			<p:submenu label="SAIR">   
+           		 			<p:menuitem value="sair" outcome="/public/login" icon="ui-icon-close" />
+		        		</p:submenu>  
+   			 		</p:menu>
+   		
+	</div>
+	   </h:form>
+	   <h:form id="menuProcessamento">
+	<div style="float: left">
+	  		   	      
+        <p:commandButton id="dynaButton" value="Executar " type="button" style="width: 106px; height: 32px;"
+         tabindex="8"/>  
+   					 <p:menu overlay="true" trigger="dynaButton"  my="left top" at="left low">  
+        			 	
+        			 	<p:menuitem id="showDialogButto" type="button" value="Validação cruzada" onclick="dlg.show()" />
+             	 		<p:menuitem id="showDialogButto2" type="button" value="OPS" onclick="dlg2.show()" /> 
+           				<p:menuitem id="showDialogButto3" type="button" value="OPS Avançado" onclick="dlg3.show()" /> 
+           			 	<p:menuitem id="showDialogButto4" type="button" value="Leave-N-out" onclick="dlg4.show()" /> 
+           			 	<p:menuitem id="showDialogButto5" type="button" value="Y-randomization" onclick="dlg5.show()" /> 
+       				 	<p:menuitem id="showDialogButto6" type="button" value="Corta pela Correlação" onclick="dlg6.show()" /> 
+       				 	<p:menuitem id="showDialogButto7" type="button" value="Detecção de Outliers" onclick="dlg7.show()" />
+             			
+   			 		</p:menu>
+ 
+	</div>
+	
+	  		   	<p:selectOneMenu   value="#{processingBean.pre_valor}" effect="fade" itemLabel="Pre-processamento" onclick="dlg.show()">
+            	       	<f:selectItem itemValue="1" itemLabel="AutoEscalar" />
+		   				<f:selectItem itemValue="2" itemLabel="Centrar na média" />
+		   				<f:selectItem itemValue="3" itemLabel="Nenhum" />
+        		</p:selectOneMenu>
+ 
+         <p:separator />
+       
+
+   </h:form>
+   <p:growl id="growl" showDetail="true" life="3" />  
+   <p:dialog id="dialog" header="Validação Cruzadas" widgetVar="dlg">
+	<h:form id="dialValidar">
+
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="varLatentes" value="Número de Variável" />
+			<p:inputText value="#{processingBean.varLatentes}" id="varLatentes" style="width: 25px;" required="true" label="varLatentes">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			<h:outputLabel for="varRetirar" value=" Número de amostras a retirar na validação cruzada " />
+			<p:inputText value="#{processingBean.varRetirar}" id="varRetirar" style="width: 25px;"
+			requiredMessage="ERRO" required="true" label="variavel Retirar" redisplay="true">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			<f:facet name="footer">
+				
+					<h:commandButton id="tte" value="Executar" 	action="#{processingBean.pag()}"/> 
+				
+				
+					
+			</f:facet>
+		</h:panelGrid>
+		
+	</h:form>
+</p:dialog>
+
+<p:growl id="growl2" showDetail="true" life="3" />  
+   <p:dialog id="dialog2" header="OPS (Ordered Predictors Selection)" widgetVar="dlg2">
+
+	<h:form id="OPS">
+
+	<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="opsLatente" value="Número de variável latentes para o OPS" />
+			<p:inputText value="#{processingBean.opsLatente}" id="opsLatente" required="true" 
+			style="width: 25px;"  label="opsLatente">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			<h:outputLabel for="opsModelo" value=" Número de variável latentes para o Modelo " />
+			<p:inputText value="#{processingBean.opsModelo}" id="opsModelo" required="true" 
+			 style="width: 25px;" label="opsModelo">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			<h:outputLabel for="opsRetirar" value=" Número de amostras a retirar na validação cruzada " />
+			<p:inputText value="#{processingBean.opsRetirar}" id="opsRetirar" required="true" 
+			style="width: 25px;" label="opsRetirar">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsJanela" value=" Janela " />
+			<p:inputText value="#{processingBean.opsJanela}" id="opsJanela" required="true" 
+			style="width: 25px;" label="opsJanela">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsIncremento" value=" Incremento " />
+			<p:inputText value="#{processingBean.opsIncremento}" id="opsIncremento" required="true" 
+			style="width: 25px;" label="opsIncremento">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsPorcentagem" value=" Porcentagem de variáveis " />
+			<p:inputText value="#{processingBean.opsPorcentagem}" id="opsPorcentagem" required="true" 
+			style="width: 25px;" label="opsPorcentagem">
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			 <p:panel header="VETOR" style="width: 225px;">  
+			<p:outputPanel id="Vetor" label=" VETOR" >
+			
+   			 	<p:selectOneRadio id="vet" value="#{processingBean.opsVetor}" layout="pageDirection"
+   			 	 required="true">
+       		 		
+       		 		<f:selectItem itemLabel="Correlograma" itemValue="1" checked="checked" />
+       		 		<f:selectItem itemLabel="Vetor de regressão" itemValue="2" immediate="TRUE" />
+        			<f:selectItem itemLabel="Produto" itemValue="3" />
+        			
+   				 </p:selectOneRadio>
+   			
+			</p:outputPanel>
+			 </p:panel>
+			 
+			<p:panel header="Critérios para classificar modelos"  style="width: 225px;" > 
+			
+   			 	<p:selectOneRadio id="mod" value="#{processingBean.criterio}" layout="pageDirection" 
+   			 	 required="true">
+       		 		<f:selectItem itemLabel="RMSECV" itemValue="1" checked="checked" />
+       		 		<f:selectItem itemLabel="Rcv" itemValue="2" />
+        			<f:selectItem itemLabel="Q2" itemValue="3" />
+        			<f:selectItem itemLabel="Spress" itemValue="4" />
+   				 </p:selectOneRadio>
+			
+			</p:panel>
+			<f:facet name="footer">
+				<h:outputLabel for="opsQTA" value=" Quantos modelos deseja ver " />
+				
+				<p:inputText value="#{processingBean.opsQTA}" id="opsQTA" required="true" 
+				style="width: 25px;" label="opsQTA">
+				<f:validateLongRange minimum="1"/>
+				</p:inputText>
+				<br/><br/>
+					<h:commandButton id="ops" value="Executar" 	action="#{processingBean.ops()}"/> 
+				
+			</f:facet>
+
+		</h:panelGrid>
+	</h:form>
+
+</p:dialog>
+<p:growl id="growl3" showDetail="true" life="3" />  
+   <p:dialog id="dialog3" header=" OPS Avançado " widgetVar="dlg3">
+
+	<h:form id="OPS_Avancado">
+
+	<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="opsLatente" value="Número de variáveis latentes máximo para o OPS" />
+			<p:inputText value="#{processingBean.opsLatente}" id="opsLatente" required="true" label="opsLatente"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsModelo" value=" Número de variável latentes para o Modelo " />
+			<p:inputText value="#{processingBean.opsModelo}" id="opsModelo" required="true" label="opsModelo"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsRetirar" value=" Número de amostras a retirar na validação cruzada " />
+			<p:inputText value="#{processingBean.opsRetirar}" id="opsRetirar" required="true" label="opsRetirar"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>	
+			
+			<h:outputLabel for="opsJanela" value=" Janela " />
+			<p:inputText value="#{processingBean.opsJanela}" id="opsJanela" required="true" label="opsJanela"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsIncremento" value=" Incremento " />
+			<p:inputText value="#{processingBean.opsIncremento}" id="opsIncremento" required="true" label="opsIncremento"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="opsPorcentagem" value=" Porcentagem de variáveis " />
+			<p:inputText value="#{processingBean.opsPorcentagem}" id="opsPorcentagem" required="true" label="opsPorcentagem"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			 
+			<h:outputLabel for="opsAvPassos" value=" Número de modelos a guardar em cada passo do OPS:" />
+			<p:inputText value="#{processingBean.opsAvPassos}" id="opsAvPassos" required="true" label="opsAvPassos"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			 
+			 <p:panel header="VETOR" style="width: 225px;">  
+			<p:outputPanel id="Vetor" label=" Vetores">
+   			 	<p:selectOneRadio id="vet" value="#{processingBean.opsVetor}" layout="pageDirection" required="true">
+       		 		<f:selectItem itemLabel="Correlograma" itemValue="1" checked="checked"/>
+       		 		<f:selectItem itemLabel="Correlograma e vetor de regressão" itemValue="2" />
+        			<f:selectItem itemLabel="Correlograma e produto" itemValue="3" />
+        			<f:selectItem itemLabel="Todos os vetores" itemValue="4" />
+   				 </p:selectOneRadio>
+			</p:outputPanel>
+			 </p:panel>
+			<p:panel header="Critérios para classificar modelos" style="width: 225px;"> 
+			<h:panelGrid columns="3" cellpadding="5">
+   			 	<p:selectOneRadio id="mod" value="#{processingBean.criterio}" layout="pageDirection">
+       		 		<f:selectItem itemLabel="RMSECV" itemValue="1" checked="checked" />
+       		 		<f:selectItem itemLabel="Rcv" itemValue="2" />
+        			<f:selectItem itemLabel="Q2" itemValue="3" />
+        			<f:selectItem itemLabel="Spress" itemValue="4" />
+   				 </p:selectOneRadio>
+			</h:panelGrid>
+			</p:panel>
+			<f:facet name="footer">
+				<h:outputLabel for="opsQTA" value=" Quantos modelos deseja ver? " />
+				
+				<p:inputText value="#{processingBean.opsQTA}" id="opsQTA" required="true" label="opsQTA"
+				style="width: 25px;" >
+				<f:validateLongRange minimum="1"/>
+				</p:inputText>
+				<br/><br/>
+					<h:commandButton id="ops" value="Executar" 	action="#{processingBean.ops_avancado()}"/> 
+				
+			</f:facet>
+
+		</h:panelGrid>
+	</h:form>
+
+</p:dialog>
+<p:growl id="growl4" showDetail="true" life="3" />  
+   <p:dialog id="dialog4" header="Leave-N-out" widgetVar="dlg4">
+	<h:form id="Leave_N_out">
+
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="varLatentes" value="Número de variáveis latentes" />
+			<p:inputText value="#{processingBean.varLatentes}" id="varLatentes" required="true" label="varLatentes" 
+			style="width: 25px;" >
+				<f:validateLongRange minimum="1"/>
+				</p:inputText>
+			
+			<h:outputLabel for="varRetirar" value=" Número máximo de amostras a retirar na validação cruzada " />
+			<p:inputText value="#{processingBean.varRetirar}" id="varRetirar" required="true" label="varRetirar"
+			style="width: 25px;" >
+				<f:validateLongRange minimum="1"/>
+				</p:inputText>
+			
+			<h:outputLabel for="repeticao" value="Número de repetições para cada validação cruzada " />
+			<p:inputText value="#{processingBean.leaveRepetir}" id="repeticao" required="true" label="repeticao"
+			style="width: 25px;" >
+				<f:validateLongRange minimum="1"/>
+				</p:inputText>
+			
+			<p:panel header="Parâmetro que deseja avaliar" style="width: 225px;"> 
+			<h:panelGrid columns="3" cellpadding="5">
+   			 	<p:selectOneRadio id="mod" value="#{processingBean.leavemodelos}" layout="pageDirection">
+       		 		<f:selectItem itemLabel="RMSECV" itemValue="1" checked="checked" />
+       		 		<f:selectItem itemLabel="Q2" itemValue="2" checked="checked" />
+        			
+   				 </p:selectOneRadio>
+			</h:panelGrid>
+			</p:panel>
+			<f:facet name="footer">
+				
+					<h:commandButton id="tte" value="Executar" 	action="#{processingBean.leave_N_out()}"/> 
+				
+				
+					
+			</f:facet>
+		</h:panelGrid>
+		
+	</h:form>
+</p:dialog>
+<p:growl id="growl5" showDetail="true" life="3" />  
+   <p:dialog id="dialog5" header="Y-randomization" widgetVar="dlg5">
+	<h:form id="Y-randomization">
+
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="varLatentes" value="Número de variáveis latentes" />
+			<p:inputText value="#{processingBean.varLatentes}" id="varLatentes" required="true" label="varLatentes"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="varRetirar" value=" Número máximo de amostras a retirar na validação cruzada " />
+			<p:inputText value="#{processingBean.varRetirar}" id="varRetirar" required="true" label="varRetirar"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+			<h:outputLabel for="aleatorio" value="Número de aleatorizações " />
+			<p:inputText value="#{processingBean.aleatorio}" id="aleatorio" required="true" label="aleatorio"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>		
+		
+			<f:facet name="footer">
+				
+					<h:commandButton id="tte" value="Executar" 	action="#{processingBean.y_randomization()}"/> 
+				
+				
+					
+			</f:facet>
+		</h:panelGrid>
+		
+	</h:form>
+</p:dialog>
+<p:growl id="growl6" showDetail="true" life="3" />  
+   <p:dialog id="dialog6" header="Corta pela Correlação" widgetVar="dlg6">
+	<h:form id="contarCorrelacao">
+
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="corteCorr" value="Escolha o valor de correlação para o corte" />
+			<p:inputText value="#{processingBean.corteCorr}" id="corteCorr" required="true" label="corteCorr"
+			 style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+					
+			<f:facet name="footer">
+				
+					<h:commandButton id="tte" value="Executar" 	action="#{processingBean.corte_correlacao()}"/> 
+								
+			</f:facet>
+		</h:panelGrid>
+		
+	</h:form>
+</p:dialog>
+<p:growl id="growl7" showDetail="true" life="3" />  
+   <p:dialog id="dialog7" header="Outliers" widgetVar="dlg7">
+	<h:form id="outliers">
+
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="varLatentes" value="Número de variáveis latentes" />
+			<p:inputText value="#{processingBean.varLatentes}" id="varLatentes" required="true" label="varLatentes"
+			style="width: 25px;" >
+			<f:validateLongRange minimum="1"/>
+			</p:inputText>
+			
+					
+			<f:facet name="footer">
+				
+					<h:commandButton id="tte" value="Executar" 	action="#{processingBean.outliers()}"/> 
+								
+			</f:facet>
+		</h:panelGrid>
+		
+	</h:form>
+</p:dialog>
+ 	<h:form id="listarArquivos">
+   
+      <p:panel header="Arquivos Listados">
+         <h:panelGrid columns="2" >
+         		<p:row>
+         		<h:inputTextarea value="#{processingBean.processX()}" rows="30" cols="100" styleClass="texArea">
+         		<!-- <h:graphicImage id="image" alt="jsf-sun"  url="/resources/imagens/folha.jpg"> -->
+ </h:inputTextarea>
+         		<h:inputTextarea style="texArea" value="#{processingBean.processY()}" rows="30" cols="10"></h:inputTextarea>
+         		
+         	</p:row>
+         	
+         </h:panelGrid>
+       
+		
+		</p:panel>  
+		  
+    </h:form> 
+    
+
+
+		</div>
+		
+		
+		<br/><br/>
+		<div id="upload">
+
+
+
+<br/>
+
+<h:form>
+<h:messages/>
+ <!-- Lista de usuarios -->
+
+       
+          <p:dataTable id="arq" var="user" value="#{processingBean.processX()}" width="75%" >
+  
+                          <p:column >
+
+                        <f:facet name="header">
+
+                            <h:outputText value="#{processingBean.titulos}" />
+
+                        </f:facet>
+										
+                       
+					
+                    </p:column>    
+ 					<p:column >
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Arquivo X" />
+
+                        </f:facet>
+										
+                        <h:outputText value="#{user}" />   
+					
+                    </p:column>
+
+                </p:dataTable>
+                
+ 
+</h:form>
+
+
+
+ 	<br/> 	<br/> 	<br/>
+ 	
+         
+      
+    <h:messages/>  
+          
+           
+
+
+</div>
+     </div>             
+      </div>           
+    </h:body>
+
+</html>
+

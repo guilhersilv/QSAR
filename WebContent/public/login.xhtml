@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"><!-- (1) -->
+<h:head>
+<link href="../resources/css/estilo.css" rel="stylesheet" type="text/css"></link>
+</h:head>
+
+<h:body >
+
+	 
+ <div id="container">
+  <div id="titulo">
+			<span id="titulo">Construção e Validação de QSAR</span>
+	</div>
+		<div id="logotipo">
+		<h:graphicImage value="/resources/imagens/logo.png" alt ="logoQSAR" />
+ 		 
+		
+		</div>
+		<div id="barra_menu">
+	    	<ui:insert name="barra_menu">
+	    		
+	   		</ui:insert>   
+		</div>
+		<div id="corpo">
+			<ui:insert name="corpo"/>   
+			<h:messages />
+			
+			<h:form >
+				<h:outputLabel value="Login: " for="login"></h:outputLabel>
+				<h:inputText id="login" label="Login" value="#{UsuarioBean.userEmail}"
+			 					required="true">
+				</h:inputText>
+				<br/><br/>			
+				<h:outputLabel value="Senha:" for="senha"/>
+				<h:inputSecret id="senha" label="Senha" value="#{UsuarioBean.password}"
+			 	required="true" redisplay="true"/>
+	 			<br/><br/>
+	 			<h:commandButton value =" Entrar " action ="#{UsuarioBean.login}"/>
+	 		</h:form > 
+		</div>
+		
+		<h:form id="novoUsuario">
+		
+		<h:commandLink action="#{UsuarioBean.novo}">Novo Usuario</h:commandLink>
+		<h:commandButton action="#{UsuarioBean.novo}"  value="Registre-se">
+		
+		</h:commandButton><br/>
+		</h:form>
+		
+		<div id="rodape">
+	    	<ui:insert name="rodape">
+	    		
+	    	</ui:insert> 
+		</div>
+	</div>
+ 
+
+                    
+  </h:body >
+
+
+</html>
