@@ -16,7 +16,6 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 
 import org.hibernate.Criteria;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -50,7 +49,7 @@ public class TesteClasses {
 public static void main(String[] args)  {
 		
 		
-	/*UsuarioRN userCrud = new UsuarioRN();
+		/*UsuarioRN userCrud = new UsuarioRN();
 	
 		
 		String[] nomes = {"junior", "kely", "junior"};

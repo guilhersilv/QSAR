@@ -2,7 +2,7 @@ package web.conexao;
 
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 
 @SuppressWarnings("deprecation")
 public class HibernateUtil {
@@ -12,7 +12,7 @@ public class HibernateUtil {
 
 	private static SessionFactory buildSessionFactory() {
 		try {
-			AnnotationConfiguration cfg = new AnnotationConfiguration();
+			Configuration cfg = new Configuration();
 			cfg.configure("hibernate.cfg.xml");
 			return cfg.buildSessionFactory();
 		} catch (Throwable e) {
