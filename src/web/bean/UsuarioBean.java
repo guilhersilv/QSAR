@@ -150,7 +150,7 @@ public String login(){
 	UsuarioRN userRN = new UsuarioRN();
 	
 	//Usuario emailpesquisado = userRN.consulta(this.getUsuario().getEmail(), this.getUsuario().getSenha());
-	Usuario emailpesquisado = (Usuario) userRN.consultar(this.userEmail);
+	Usuario emailpesquisado = userRN.consultar(this.userEmail);
 	if(emailpesquisado == null){
 		return "false";
 	}

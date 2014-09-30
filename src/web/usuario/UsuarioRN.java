@@ -87,7 +87,7 @@ public Usuario consultar(String login){
 	Criteria criteria = session.createCriteria(Usuario.class);
 	//return this.userCrud.consultar(login);
 	 transacao.commit();
-			return (Usuario) criteria.add(Restrictions.eq("email", login)).uniqueResult();
+			return (Usuario) criteria.add(Restrictions.eq("login", login)).uniqueResult();
 }
 		
 	

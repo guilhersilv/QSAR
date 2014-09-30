@@ -9,10 +9,11 @@ public class DAOFactory {
 	
 			
 		public static UsuarioDAO criarUsuarioDAO(){
-			
+					
 			UsuarioCrud usuarioDAO = new UsuarioCrud();
 			usuarioDAO.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
 			return usuarioDAO;
+			
 		}
 	
 
